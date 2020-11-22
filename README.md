@@ -1,4 +1,4 @@
-# 503-Site+
+# 503-Site
 
 ## Site Split:
 - Add page: Harsh
