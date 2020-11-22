@@ -1,6 +1,8 @@
-# 503-Site
-## Add page: Harsh
-## Update Page: Matt
-## Main Page: Atul
+# 503-Site+
 
-![Drag Racing](https://github.com/mjturi/503-Site/blob/main/503%20PROJ%20ER.png)
+## Site Split:
+- Add page: Harsh
+- Update Page: Matt
+- Main Page: Atul
+
+![ER](https://github.com/mjturi/503-Site/blob/main/503%20PROJ%20ER.png)
