@@ -5,4 +5,4 @@
 - Update Page: Matt
 - Main Page: Atul
 
-![ER](https://github.com/mjturi/503-Site/blob/main/503%20PROJ%20ER%202.png)
+![ER](https://github.com/mjturi/503-Site/blob/main/503%20PROJ%20ER_LI%202.png)
