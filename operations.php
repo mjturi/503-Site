@@ -4,7 +4,7 @@
 function connectDatabase() {
     $servername = "localhost";
     $username = "root";
-    $password = "ZugYdnpW1!";
+    $password = "*******";
 
 
     $conn = new mysqli($servername, $username, $password);
