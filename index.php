@@ -15,6 +15,19 @@ session_start();
             $id = $_REQUEST['id'];
             updateMatches('matches', $id, $hscore, $ascore);
         }
+        if (isset($_POST['push_edits4'])) {
+            $name = $_REQUEST['name'];
+            $position = $_REQUEST['position'];
+            $age = $_REQUEST['age'];
+            $height = $_REQUEST['height'];
+            $weight = $_REQUEST['weight'];
+            $country = $_REQUEST['country'];
+            $goals = $_REQUEST['goals'];
+            $assists = $_REQUEST['assists'];
+            $marketval = $_REQUEST['marketval'];
+            $id = $_REQUEST['id'];
+            updatePlayers('players', $id, $name, $position, $age, $height, $weight, $country, $goals, $assists, $marketval);
+        }
 		?>
 
 </head>
@@ -296,19 +309,6 @@ session_start();
         echo "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Player Market Value:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input style=\"color: black\" value=\"$editRow[marketval]\" type=\"text\" size=\"20\"  name=\"marketval\"></p><br>";
         echo "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input style=\"color: black\" name=\"push_edits4\" type=\"submit\" value=\"Change\" /></p>";
         echo "</form>";
-    }
-    if (isset($_POST['push_edits4'])) {
-        $name = $_REQUEST['name'];
-        $position = $_REQUEST['position'];
-        $age = $_REQUEST['age'];
-        $height = $_REQUEST['height'];
-        $weight = $_REQUEST['weight'];
-        $country = $_REQUEST['country'];
-        $goals = $_REQUEST['goals'];
-        $assists = $_REQUEST['assists'];
-        $marketval = $_REQUEST['marketval'];
-        $id = $_REQUEST['id'];
-        updatePlayers('players', $id, $name, $position, $age, $height, $weight, $country, $goals, $assists, $marketval);
     }
     ?>
 	</div>
