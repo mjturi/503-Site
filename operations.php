@@ -4,7 +4,7 @@
 function connectDatabase() {
     $servername = "localhost";
     $username = "root";
-    $password = "*****";
+    $password = "ZugYdnpW1!";
 
 
     $conn = new mysqli($servername, $username, $password);
@@ -40,6 +40,69 @@ function deleteData($table, $id) {
     $conn->close();
 }
 
+function displayEdit($table, $id){
+    $almid = "$table";
+    $specid = rtrim($almid, 's');
+    $finid = $specid."id";
+
+    $conn = connectDatabase();
+    $query = "SELECT * FROM $table WHERE $finid = $id";
+    $result =  $conn->query($query);
+    return $result->fetch_assoc();
+}
+
+function displayMatchEdit($id){
+    $finid = "matchid";
+    $conn = connectDatabase();
+    $query = "SELECT matchid, homescore, visitorscore FROM matches WHERE $finid = $id";
+    $result =  $conn->query($query);
+    return $result->fetch_assoc();
+
+}
+
+function updateLeagues($table, $id, $name, $country){
+    $conn = connectDatabase();
+    $query = "UPDATE $table SET name= '$name', country= '$country' WHERE leagueid = $id";
+    if ($conn->query($query) === TRUE) {
+        header('Location: http://localhost:8000/update.php');
+    } else {
+        header('Location: http://localhost:8000/update2.php');
+    }
+}
+
+function updateClubs($table, $id, $name, $ranking, $wins, $losses, $draws, $points, $country){
+    $conn = connectDatabase();
+    $query = "UPDATE $table SET name= '$name', ranking= $ranking, wins= $wins, losses= $losses, draws=$draws, points= $points, country= '$country' WHERE clubid = $id";
+    if ($conn->query($query) === TRUE) {
+        header('Location: http://localhost:8000/update.php');
+    } else {
+        header('Location: http://localhost:8000/update2.php');
+    }
+}
+
+function updateMatches($table, $id, $homescore, $visitorscore){
+    $conn = connectDatabase();
+    $query = "UPDATE $table SET homescore= $homescore, visitorscore= $visitorscore WHERE matchid = $id";
+    if ($conn->query($query) === TRUE) {
+        header('Location: http://localhost:8000/update.php');
+    } else {
+        header('Location: http://localhost:8000/update2.php');
+    }
+}
+
+
+
+function updatePlayers($table, $id, $name, $position, $age, $height, $weight, $country, $goals, $assists, $marketval){
+    $conn = connectDatabase();
+    $query = "UPDATE $table SET name= '$name', country= '$country', position = '$position', age= $age, height= '$height', weight= $weight, goals= '$goals', assists= $assists, marketval=$marketval WHERE playerid = $id";
+    if ($conn->query($query) === TRUE) {
+        header('Location: http://localhost:8000/update.php');
+    } else {
+        header('Location: http://localhost:8000/update2.php');
+    }
+}
+
+
 function getClub($id) {
     $conn = connectDatabase();
     $query = "SELECT name FROM clubs WHERE clubs.clubid = $id";
@@ -64,14 +127,7 @@ function getData($table) {
         $sql = sprintf($getRow, $table);
     }
 
-    $result = $conn->query($sql);
-    $json = [];
-    while ($row = $result->fetch_assoc()){
-        $json[] = $row;
-    }
-
-    $conn->close();
-    return $result;
+    return $conn->query($sql);
 }
 
-?>
+
