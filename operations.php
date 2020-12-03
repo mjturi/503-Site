@@ -2,13 +2,13 @@
 
 
 function connectDatabase() {
-    $servername = "localhost";
+    $servername = "127.0.0.1:3306";
     $username = "root";
-    $password = "*****";
+    $password = "abcd1234";
 
 
     $conn = new mysqli($servername, $username, $password);
-    $conn->select_db("website");
+    $conn->select_db("Soccer");
 
     if ($conn->connect_error){
         die("connection failed: " . $conn->connect_error);
@@ -17,28 +17,6 @@ function connectDatabase() {
 
 }
 
-function deleteData($table, $id) {
-    $conn = connectDatabase();
-    $deleteRow = "DELETE FROM %s WHERE id=%d";
-
-    if ($table == "Clubs") {
-        $sql = sprintf($deleteRow, $table, $id);
-    } elseif ($table == "Leagues") {
-        $sql = sprintf($deleteRow, $table, $id);
-    } elseif ($table == "Matches") {
-        $sql = sprintf($deleteRow, $table, $id);
-    } elseif ($table == "Players") {
-        $sql = sprintf($deleteRow, $table, $id);
-    }
-
-    if ($conn->query($sql) === TRUE) {
-        echo "Record deleted successfully";
-    } else {
-        echo "Error deleting record: " . $conn->error;
-    }
-
-    $conn->close();
-}
 
 function getClub($id) {
     $conn = connectDatabase();
@@ -71,7 +49,7 @@ function getData($table) {
     }
 
     $conn->close();
-    return $result;
+    return $json;
 }
 
 ?>
