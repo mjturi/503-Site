@@ -24,7 +24,6 @@ session_start();
     </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/index.css">
     <?php include 'operations.php';
     if (isset($_POST['push_edits1_x'])) {
         $name = $_REQUEST['name'];
@@ -109,7 +108,7 @@ session_start();
 							<input class="padding_left_20" type="image" name="edit" value="edit" src="./images/pencil.svg" width="20px" height="20px">
 						</form>
 						<button class="padding_left_20" onclick="deleteRecord('leagues', <?php echo $league['leagueid']; ?>)">
-							<img src="trash-can.svg" width="20px" height="20px" alt="Delete"/>
+							<img src="images/trash-can.svg" width="20px" height="20px" alt="Delete"/>
 						</button>
 					</span>
                 <h2 class="clear_both"><?php echo $league['name']; ?></h2>
@@ -171,7 +170,7 @@ session_start();
                     </td>
                     <td>
                         <button class="padding_left_20" onclick="deleteRecord('clubs', <?php echo $club['clubid']; ?>)">
-                            <img src="trash-can.svg" width="20px" height="20px" alt="Delete"/>
+                            <img src="images/trash-can.svg" width="20px" height="20px" alt="Delete"/>
                         </button>
                     </td>
                 </tr>
@@ -216,7 +215,7 @@ session_start();
 						<input class="padding_left_20" type="image" name="edit" value="edit" src="./images/pencil.svg" width="20px" height="20px">
 					</form>
 					<button class="padding_left_20" onclick="deleteRecord('matches', <?php echo $match['matchid']; ?>)">
-						<img src="trash-can.svg" width="20px" height="20px" alt="Delete"/>
+						<img src="images/trash-can.svg" width="20px" height="20px" alt="Delete"/>
 					</button>
 				</span>
                     </br>
@@ -268,7 +267,7 @@ session_start();
 					<input class="padding_left_20" type="image" name="edit" value="edit" src="./images/pencil.svg" width="20px" height="20px">
 				</form>
 				<button class="padding_left_20" onclick="deleteRecord('players', <?php echo $player['playerid']; ?>)">
-					<img src="trash-can.svg" width="20px" height="20px" alt="Delete"/>
+					<img src="images/trash-can.svg" width="20px" height="20px" alt="Delete"/>
 				</button>
 			</span>
                 <div class="numberCircle padding_bottom_20 clear_both">&nbsp;<?php echo $player['rating'];?></div>

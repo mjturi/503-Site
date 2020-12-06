@@ -2,13 +2,13 @@
 
 
 function connectDatabase() {
-    $servername = "127.0.0.1:3306";
+    $servername = "localhost";
     $username = "root";
-    $password = "abcd1234";
+    $password = "*****";
 
 
     $conn = new mysqli($servername, $username, $password);
-    $conn->select_db("Soccer");
+    $conn->select_db("website");
 
     if ($conn->connect_error){
         die("connection failed: " . $conn->connect_error);
@@ -17,6 +17,28 @@ function connectDatabase() {
 
 }
 
+function deleteData($table, $id) {
+    $conn = connectDatabase();
+    $deleteRow = "DELETE FROM %s WHERE id=%d";
+
+    if ($table == "Clubs") {
+        $sql = sprintf($deleteRow, $table, $id);
+    } elseif ($table == "Leagues") {
+        $sql = sprintf($deleteRow, $table, $id);
+    } elseif ($table == "Matches") {
+        $sql = sprintf($deleteRow, $table, $id);
+    } elseif ($table == "Players") {
+        $sql = sprintf($deleteRow, $table, $id);
+    }
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Record deleted successfully";
+    } else {
+        echo "Error deleting record: " . $conn->error;
+    }
+
+    $conn->close();
+}
 
 function displayEdit($table, $id){
     $almid = "$table";
@@ -42,9 +64,9 @@ function updateLeagues($table, $id, $name, $country){
     $conn = connectDatabase();
     $query = "UPDATE $table SET name= '$name', country= '$country' WHERE leagueid = $id";
     if ($conn->query($query) === TRUE) {
-        header('Location: http://localhost:8000/update.php');
+        header('Location: http://localhost:8000/success.php');
     } else {
-        header('Location: http://localhost:8000/update2.php');
+        header('Location: http://localhost:8000/fail.php');
     }
 }
 
@@ -52,9 +74,9 @@ function updateClubs($table, $id, $name, $ranking, $wins, $losses, $draws, $poin
     $conn = connectDatabase();
     $query = "UPDATE $table SET name= '$name', ranking= $ranking, wins= $wins, losses= $losses, draws=$draws, points= $points, country= '$country' WHERE clubid = $id";
     if ($conn->query($query) === TRUE) {
-        header('Location: http://localhost:8000/update.php');
+        header('Location: http://localhost:8000/success.php');
     } else {
-        header('Location: http://localhost:8000/update2.php');
+        header('Location: http://localhost:8000/fail.php');
     }
 }
 
@@ -62,9 +84,9 @@ function updateMatches($table, $id, $homescore, $visitorscore){
     $conn = connectDatabase();
     $query = "UPDATE $table SET homescore= $homescore, visitorscore= $visitorscore WHERE matchid = $id";
     if ($conn->query($query) === TRUE) {
-        header('Location: http://localhost:8000/update.php');
+        header('Location: http://localhost:8000/success.php');
     } else {
-        header('Location: http://localhost:8000/update2.php');
+        header('Location: http://localhost:8000/fail.php');
     }
 }
 
@@ -74,9 +96,9 @@ function updatePlayers($table, $id, $name, $position, $age, $height, $weight, $c
     $conn = connectDatabase();
     $query = "UPDATE $table SET name= '$name', country= '$country', position = '$position', age= $age, height= '$height', weight= $weight, goals= '$goals', assists= $assists, marketval=$marketval WHERE playerid = $id";
     if ($conn->query($query) === TRUE) {
-        header('Location: http://localhost:8000/update.php');
+        header('Location: http://localhost:8000/success.php');
     } else {
-        header('Location: http://localhost:8000/update2.php');
+        header('Location: http://localhost:8000/fail.php');
     }
 }
 
@@ -105,14 +127,7 @@ function getData($table) {
         $sql = sprintf($getRow, $table);
     }
 
-    $result = $conn->query($sql);
-    $json = [];
-    while ($row = $result->fetch_assoc()){
-        $json[] = $row;
-    }
-
-    $conn->close();
-    return $json;
+    return $conn->query($sql);
 }
 
 
