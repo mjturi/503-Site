@@ -64,9 +64,13 @@ function updateLeagues($table, $id, $name, $country){
     $conn = connectDatabase();
     $query = "UPDATE $table SET name= '$name', country= '$country' WHERE leagueid = $id";
     if ($conn->query($query) === TRUE) {
-        header('Location: http://localhost:8000/success.php');
+        echo "<script language='javascript'>
+                window.location.replace(\"http://localhost:8000/success.php\");
+            </script>";
     } else {
-        header('Location: http://localhost:8000/fail.php');
+        echo "<script language='javascript'>
+                window.location.replace(\"http://localhost:8000/fail.php\");
+            </script>";
     }
 }
 
@@ -74,9 +78,13 @@ function updateClubs($table, $id, $name, $ranking, $wins, $losses, $draws, $poin
     $conn = connectDatabase();
     $query = "UPDATE $table SET name= '$name', ranking= $ranking, wins= $wins, losses= $losses, draws=$draws, points= $points, country= '$country' WHERE clubid = $id";
     if ($conn->query($query) === TRUE) {
-        header('Location: http://localhost:8000/success.php');
+        echo "<script language='javascript'>
+                window.location.replace(\"http://localhost:8000/success.php\");
+            </script>";
     } else {
-        header('Location: http://localhost:8000/fail.php');
+        echo "<script language='javascript'>
+                window.location.replace(\"http://localhost:8000/fail.php\");
+            </script>";
     }
 }
 
@@ -84,9 +92,13 @@ function updateMatches($table, $id, $homescore, $visitorscore){
     $conn = connectDatabase();
     $query = "UPDATE $table SET homescore= $homescore, visitorscore= $visitorscore WHERE matchid = $id";
     if ($conn->query($query) === TRUE) {
-        header('Location: http://localhost:8000/success.php');
+        echo "<script language='javascript'>
+                window.location.replace(\"http://localhost:8000/success.php\");
+            </script>";
     } else {
-        header('Location: http://localhost:8000/fail.php');
+        echo "<script language='javascript'>
+                window.location.replace(\"http://localhost:8000/fail.php\");
+            </script>";
     }
 }
 
@@ -96,9 +108,13 @@ function updatePlayers($table, $id, $name, $position, $age, $height, $weight, $c
     $conn = connectDatabase();
     $query = "UPDATE $table SET name= '$name', country= '$country', position = '$position', age= $age, height= '$height', weight= $weight, goals= '$goals', assists= $assists, marketval=$marketval WHERE playerid = $id";
     if ($conn->query($query) === TRUE) {
-        header('Location: http://localhost:8000/success.php');
+        echo "<script language='javascript'>
+                window.location.replace(\"http://localhost:8000/success.php\");
+            </script>";
     } else {
-        header('Location: http://localhost:8000/fail.php');
+        echo "<script language='javascript'>
+                window.location.replace(\"http://localhost:8000/fail.php\");
+            </script>";
     }
 }
 
