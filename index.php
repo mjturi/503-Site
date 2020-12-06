@@ -20,19 +20,33 @@ session_start();
             );
             return false;
         }
+
     </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/index.css">
     <?php include 'operations.php';
+    if (isset($_POST['push_edits1_x'])) {
+        $name = $_REQUEST['name'];
+        $country = $_REQUEST['country'];
+        $id = $_REQUEST['id'];
+        updateLeagues('leagues', $id, $name, $country);
+    }
+    if (isset($_POST['push_edits2_x'])) {
+        $name = $_REQUEST['name'];
+        $ranking = $_REQUEST['ranking'];
+        $wins = $_REQUEST['wins'];
+        $losses = $_REQUEST['losses'];
+        $draws = $_REQUEST['draws'];
+        $points = $_REQUEST['points'];
+        $id = $_REQUEST['id'];
+        updateClubs('clubs', $id, $name, $ranking, $wins, $losses, $draws, $points, $country);
+    }
     if (isset($_POST['push_edits3_x'])) {
         $hscore = $_REQUEST['hscore'];
         $ascore = $_REQUEST['ascore'];
         $id = $_REQUEST['id'];
         updateMatches('matches', $id, $hscore, $ascore);
-    }
-    if (isset($_POST['cancel_edit_x'])) {
-        header('Location: http://localhost:8000/index.php');
     }
     if (isset($_POST['push_edits4_x'])) {
         $name = $_REQUEST['name'];
@@ -113,17 +127,8 @@ session_start();
             echo "<input style=\"color: black\" value=\"$editRow[leagueid]\" type=\"hidden\" size=\"20\" name=\"id\" >";
             echo "<p>League Name:&nbsp;&nbsp;&nbsp;&nbsp; <input style=\"color: black\" value=\"$editRow[name]\" type=\"text\" size=\"20\" name=\"name\" ></p><br>";
             echo "<p>League Country:&nbsp; <input style=\"color: black\" value=\"$editRow[country]\" type=\"text\" size=\"20\"  name=\"country\"></p><br>";
-            echo "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class=\"padding_left_20\" type=\"image\" name=\"push_edits1\" value=\"edit\" src=\"./images/pencil.svg\" width=\"40px\" height=\"40px\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class=\"padding_right_20\" type=\"image\" name=\"cancel_edit\" value=\"edit\" src=\"./images/cancel.png\" width=\"40px\" height=\"40px\"></p>";
+            echo "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class=\"padding_left_20\" type=\"image\" name=\"push_edits1\" value=\"edit\" src=\"./images/pencil.svg\" width=\"40px\" height=\"40px\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onClick=\"window.location.reload();\"><img  src=\"./images/cancel.png\" width=\"40px\" height=\"40px\"></button></p>";
             echo "</form>";
-        }
-        if (isset($_POST['cancel_edit1_x'])) {
-            header('Location: http://localhost:8000/index.php');
-        }
-        if (isset($_POST['push_edits1_x'])) {
-            $name = $_REQUEST['name'];
-            $country = $_REQUEST['country'];
-            $id = $_REQUEST['id'];
-            updateLeagues('leagues', $id, $name, $country);
         }
         ?>
     </div>
@@ -185,18 +190,8 @@ session_start();
             echo "<input style=\"color: black\" value=\"$editRow[clubid]\" type=\"hidden\" size=\"20\" name=\"id\" >";
             echo "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Club Ranking:&nbsp;&nbsp;&nbsp; <input style=\"color: black\" value=\"$editRow[ranking]\" type=\"text\" size=\"20\" name=\"ranking\" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Club Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input style=\"color: black\" value=\"$editRow[name]\" type=\"text\" size=\"20\" name=\"name\" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Club Wins:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input style=\"color: black\" value=\"$editRow[wins]\" type=\"text\" size=\"20\" name=\"wins\" ></p><br>";
             echo "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Club Losses:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input style=\"color: black\" value=\"$editRow[losses]\" type=\"text\" size=\"20\" name=\"losses\" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Club Draws:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input style=\"color: black\" value=\"$editRow[draws]\" type=\"text\" size=\"20\" name=\"draws\" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Club Points:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input style=\"color: black\" value=\"$editRow[points]\" type=\"text\" size=\"20\"  name=\"points\"></p><br>";
-            echo "<p><input class=\"padding_left_20\" type=\"image\" name=\"push_edits2\" value=\"edit\" src=\"./images/pencil.svg\" width=\"40px\" height=\"40px\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class=\"padding_right_20\" type=\"image\" name=\"cancel_edit\" value=\"edit\" src=\"./images/cancel.png\" width=\"40px\" height=\"40px\"></p>";
+            echo "<p><input class=\"padding_left_20\" type=\"image\" name=\"push_edits2\" value=\"edit\" src=\"./images/pencil.svg\" width=\"40px\" height=\"40px\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onClick=\"window.location.reload();\"><img  src=\"./images/cancel.png\" width=\"40px\" height=\"40px\"></p>";
             echo "</form>";
-        }
-        if (isset($_POST['push_edits2_x'])) {
-            $name = $_REQUEST['name'];
-            $ranking = $_REQUEST['ranking'];
-            $wins = $_REQUEST['wins'];
-            $losses = $_REQUEST['losses'];
-            $draws = $_REQUEST['draws'];
-            $points = $_REQUEST['points'];
-            $id = $_REQUEST['id'];
-            updateClubs('clubs', $id, $name, $ranking, $wins, $losses, $draws, $points, $country);
         }
         ?>
     </div>
@@ -250,7 +245,7 @@ session_start();
             echo "<input style=\"color: black\" value=\"$editRow[matchid]\" type=\"hidden\" size=\"20\" name=\"id\" >";
             echo "<p>Home Score:&nbsp;&nbsp; <input style=\"color: black\" value=\"$editRow[homescore]\" type=\"text\" size=\"20\" name=\"hscore\" ></p><br>";
             echo "<p>Away Score:&nbsp;&nbsp;&nbsp; <input style=\"color: black\" value=\"$editRow[visitorscore]\" type=\"text\" size=\"20\" name=\"ascore\" ></p><br>";
-            echo "<p><input class=\"padding_left_20\" type=\"image\" name=\"push_edits3\" value=\"edit\" src=\"./images/pencil.svg\" width=\"40px\" height=\"40px\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class=\"padding_right_20\" type=\"image\" name=\"cancel_edit\" value=\"edit\" src=\"./images/cancel.png\" width=\"40px\" height=\"40px\"></p>";
+            echo "<p><input class=\"padding_left_20\" type=\"image\" name=\"push_edits3\" value=\"edit\" src=\"./images/pencil.svg\" width=\"40px\" height=\"40px\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onClick=\"window.location.reload();\"><img  src=\"./images/cancel.png\" width=\"40px\" height=\"40px\"></p>";
             echo "</form>";
         }
         ?>
@@ -323,7 +318,7 @@ session_start();
             echo "<p>Player Name:&nbsp;&nbsp;&nbsp;<input style=\"color: black\" value=\"$editRow[name]\" type=\"text\" size=\"20\" name=\"name\" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Player Position:&nbsp;&nbsp;&nbsp;<input style=\"color: black\" value=\"$editRow[position]\" type=\"text\" size=\"20\" name=\"position\" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Player Age:&nbsp;&nbsp;&nbsp;<input style=\"color: black\" value=\"$editRow[age]\" type=\"text\" size=\"20\" name=\"age\" ></p><br>";
             echo "<p>Player Height:&nbsp;&nbsp;&nbsp;<input style=\"color: black\" value=\"$editRow[height]\" type=\"text\" size=\"20\" name=\"height\" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Player Weight:&nbsp;&nbsp;&nbsp;<input style=\"color: black\" value=\"$editRow[weight]\" type=\"text\" size=\"20\" name=\"weight\" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Player Country:&nbsp;&nbsp;&nbsp;<input style=\"color: black\" value=\"$editRow[country]\" type=\"text\" size=\"20\"  name=\"country\"></p><br>";
             echo "<p>Player Goals:&nbsp;&nbsp;&nbsp;<input style=\"color: black\" value=\"$editRow[goals]\" type=\"text\" size=\"20\"  name=\"goals\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Player Assists:&nbsp;&nbsp;&nbsp;<input style=\"color: black\" value=\"$editRow[assists]\" type=\"text\" size=\"20\"  name=\"assists\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Player Market Value:&nbsp;&nbsp;&nbsp;<input style=\"color: black\" value=\"$editRow[marketval]\" type=\"text\" size=\"20\"  name=\"marketval\"></p><br>";
-            echo "<p><input class=\"padding_left_20\" type=\"image\" name=\"push_edits4\" value=\"edit\" src=\"./images/pencil.svg\" width=\"40px\" height=\"40px\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class=\"padding_right_20\" type=\"image\" name=\"cancel_edit\" value=\"edit\" src=\"./images/cancel.png\" width=\"40px\" height=\"40px\"></p>";
+            echo "<p><input class=\"padding_left_20\" type=\"image\" name=\"push_edits4\" value=\"edit\" src=\"./images/pencil.svg\" width=\"40px\" height=\"40px\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onClick=\"window.location.reload();\"><img  src=\"./images/cancel.png\" width=\"40px\" height=\"40px\"></p>";
             echo "</form>";
         }
         ?>
