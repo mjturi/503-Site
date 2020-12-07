@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-        <link rel="stylesheet" type="text/css" href="css/style.css" media="screen">
-    </head>
-    <body>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="css/style.css" media="screen">
+</head>
+<body>
     <header>
         <div id="logo">
             <a href="https://www.sdsu.edu/">
@@ -16,16 +16,16 @@
         </div>
         <nav id="nav">
             <ul class="navigation">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">Leagues</a></li>
-                <li><a href="events.html">Clubs</a></li>
-                <li><a href="exhibit.html">Matches</a></li>
-                <li><a href="science.html">Players</a></li>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="#leagues">Leagues</a></li>
+                <li><a href="#clubs">Clubs</a></li>
+                <li><a href="#matches">Matches</a></li>
+                <li><a href="#players">Players</a></li>
                 <li><a href="#">Get Involved</a></li>
             </ul>
         </nav>
     </header>
     <br>
     <h1>Error updating record. Please try again.</h1>
-    </body>
+</body>
 </html>

@@ -179,42 +179,6 @@ session_start();
             		</div>
             		<div id="updateform">
                                 		</div>
-        <!-- <table>
-            <tr>
-                <th>Ranking</th>
-                <th>Club</th>
-                <th>Wins</th>
-                <th>Loss</th>
-                <th>Draw</th>
-                <th>Points</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-            <?php
-            $clubs = getData('clubs');
-            foreach($clubs as $club):
-                $id = $club['clubid'];
-                ?>
-                <tr>
-                    <td><?php echo $club['ranking']; ?></td>
-                    <td><?php echo $club['name']; ?></td>
-                    <td><?php echo $club['wins']; ?></td>
-                    <td><?php echo $club['losses']; ?></td>
-                    <td><?php echo $club['draws']; ?></td>
-                    <td><?php echo $club['points']; ?></td>
-                    <td>
-                    <button class="padding_left_20" onclick="updateclub(<?php echo $club['clubid']; ?>)">
-                                                <img src="./images/pencil.svg" width="20px" height="20px" alt="Edit"/>
-                                            </button>
-                    </td>
-                    <td>
-                        <button class="padding_left_20" onclick="deleteRecord('clubs', <?php echo $club['clubid']; ?>)">
-                            <img src="images/trash-can.svg" width="20px" height="20px" alt="Delete"/>
-                        </button>
-                    </td>
-                </tr>
-            <?php endforeach;?>
-        </table> -->
         <br>
         <br>
     </div>
