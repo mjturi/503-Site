@@ -10,11 +10,36 @@ session_start();
     <link rel="stylesheet" href="./css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script>
+    function showClubs() {
+    			var leagueid = document.getElementById("select_league").value;
+    			$.get({
+    				url: 'clubs.php?leagueid=' + leagueid,
+    				success: function(data) {
+    					$('#selectedLeague').html(data);
+    				}
+    			}
+    			);
+    			return false;
+    		}
+    		function updateclub(id) {
+            			$.get({
+            				url: 'update_club_form.php?clubid=' + id,
+            				success: function(data) {
+            					$('#updateform').html(data);
+            				}
+            			}
+            			);
+            			return false;
+            		}
         function deleteRecord(table, id) {
             $.get({
                     url: 'delete.php?table=' + table + '&id=' + id,
                     success: function() {
-                        location.reload();
+                        if(table == 'clubs') {
+                        						showClubs();
+                        					} else {
+                        						location.reload();
+                        					}
                     }
                 }
             );
@@ -39,7 +64,7 @@ session_start();
         $draws = $_REQUEST['draws'];
         $points = $_REQUEST['points'];
         $id = $_REQUEST['id'];
-        updateClubs('clubs', $id, $name, $ranking, $wins, $losses, $draws, $points, $country);
+        updateClubs('clubs', $id, $name, $ranking, $wins, $losses, $draws, $points);
     }
     if (isset($_POST['push_edits3_x'])) {
         $hscore = $_REQUEST['hscore'];
@@ -65,11 +90,11 @@ session_start();
 </head>
 
 
-<body>
+<body onload="showClubs()">
 <!--Start of Header-->
 <header>
     <div id="logo">
-        <a href="https://www.sdsu.edu/">
+        <a href="index.php">
             <img src="./images/football.svg">
         </a>
         <a href="index.php">
@@ -78,16 +103,17 @@ session_start();
     </div>
     <nav id="nav">
         <ul class="navigation">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">Leagues</a></li>
-            <li><a href="events.html">Clubs</a></li>
-            <li><a href="exhibit.html">Matches</a></li>
-            <li><a href="science.html">Players</a></li>
+            <li><a href="index.php">Home</a></li>
+            <li><a href="#leagues">Leagues</a></li>
+            <li><a href="#clubs">Clubs</a></li>
+            <li><a href="#matches">Matches</a></li>
+            <li><a href="#players">Players</a></li>
             <li><a href="#">Get Involved</a></li>
         </ul>
     </nav>
 </header>
 
+<?php $leagues = getData('leagues'); ?>
 <div>
     <h1>Leagues</h1>
     <a class="padding_left_20" href="https://www.sdsu.edu/">
@@ -95,7 +121,6 @@ session_start();
     </a>
     <div id="leagues" class="columns">
         <?php
-        $leagues = getData('leagues');
         foreach($leagues as $league):
             $id = $league['leagueid'];
             ?>
@@ -138,7 +163,23 @@ session_start();
         <a class="padding_left_20" href="https://www.sdsu.edu/">
             <img src="./images/add.svg" width="30px" height="30px" alt="Add Club">
         </a>
-        <table>
+        <div class="box">
+        		<select id="select_league" name="select_league" onchange="showClubs()">
+        			<option value="0" selected="selected">Select League</option>
+        			<?php
+        			if (! empty($leagues)) {
+        				foreach($leagues as $league) {
+        					echo '<option value="' . $league['leagueid'] . '">' . $league['name'] . '</option>';
+        				}
+        			}
+        			?>
+        		</select>
+        	</div>
+        	<div id="selectedLeague">
+            		</div>
+            		<div id="updateform">
+                                		</div>
+        <!-- <table>
             <tr>
                 <th>Ranking</th>
                 <th>Club</th>
@@ -162,11 +203,9 @@ session_start();
                     <td><?php echo $club['draws']; ?></td>
                     <td><?php echo $club['points']; ?></td>
                     <td>
-                        <form name="edit"  method="post">
-                            <input type="hidden" name="id" value="<?php echo $id ?>">
-                            <input type="hidden" name="clubs">
-                            <input class="padding_left_20" type="image" name="edit" value="edit" src="./images/pencil.svg" width="20px" height="20px">
-                        </form>
+                    <button class="padding_left_20" onclick="updateclub(<?php echo $club['clubid']; ?>)">
+                                                <img src="./images/pencil.svg" width="20px" height="20px" alt="Edit"/>
+                                            </button>
                     </td>
                     <td>
                         <button class="padding_left_20" onclick="deleteRecord('clubs', <?php echo $club['clubid']; ?>)">
@@ -175,24 +214,9 @@ session_start();
                     </td>
                 </tr>
             <?php endforeach;?>
-        </table>
+        </table> -->
         <br>
         <br>
-        <?php
-        if (isset($_POST['clubs'])) {
-            $id = $_REQUEST['id'];
-            $editRow = displayEdit("clubs", $id);
-            echo "<form method=\"POST\" class='editC'>";
-            echo "<br>";
-            echo "<h2>Edit this Club</h2>";
-            echo "<br>";
-            echo "<input style=\"color: black\" value=\"$editRow[clubid]\" type=\"hidden\" size=\"20\" name=\"id\" >";
-            echo "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Club Ranking:&nbsp;&nbsp;&nbsp; <input style=\"color: black\" value=\"$editRow[ranking]\" type=\"text\" size=\"20\" name=\"ranking\" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Club Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input style=\"color: black\" value=\"$editRow[name]\" type=\"text\" size=\"20\" name=\"name\" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Club Wins:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input style=\"color: black\" value=\"$editRow[wins]\" type=\"text\" size=\"20\" name=\"wins\" ></p><br>";
-            echo "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Club Losses:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input style=\"color: black\" value=\"$editRow[losses]\" type=\"text\" size=\"20\" name=\"losses\" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Club Draws:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input style=\"color: black\" value=\"$editRow[draws]\" type=\"text\" size=\"20\" name=\"draws\" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Club Points:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input style=\"color: black\" value=\"$editRow[points]\" type=\"text\" size=\"20\"  name=\"points\"></p><br>";
-            echo "<p><input class=\"padding_left_20\" type=\"image\" name=\"push_edits2\" value=\"edit\" src=\"./images/pencil.svg\" width=\"40px\" height=\"40px\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onClick=\"window.location.reload();\"><img  src=\"./images/cancel.png\" width=\"40px\" height=\"40px\"></p>";
-            echo "</form>";
-        }
-        ?>
     </div>
     </br>
     <div id="matches">
