@@ -1,14 +1,16 @@
 <?php
 
 
+
+
 function connectDatabase() {
-    $servername = "127.0.0.1:3306";
+    $servername = "localhost";
     $username = "root";
-    $password = "abcd1234";
+    $password = "ZugYdnpW1!";
 
 
     $conn = new mysqli($servername, $username, $password);
-    $conn->select_db("Soccer");
+    $conn->select_db("soccer");
 
     if ($conn->connect_error){
         die("connection failed: " . $conn->connect_error);
@@ -21,13 +23,13 @@ function deleteData($table, $id) {
     $conn = connectDatabase();
     $deleteRow = "DELETE FROM %s WHERE id=%d";
 
-    if ($table == "Clubs") {
+    if ($table == "Club") {
         $sql = sprintf($deleteRow, $table, $id);
-    } elseif ($table == "Leagues") {
+    } elseif ($table == "League") {
         $sql = sprintf($deleteRow, $table, $id);
     } elseif ($table == "Matches") {
         $sql = sprintf($deleteRow, $table, $id);
-    } elseif ($table == "Players") {
+    } elseif ($table == "Player") {
         $sql = sprintf($deleteRow, $table, $id);
     }
 
@@ -43,7 +45,7 @@ function deleteData($table, $id) {
 function displayEdit($table, $id){
     $almid = "$table";
     $specid = rtrim($almid, 's');
-    $finid = $specid."id";
+    $finid = $specid."_id";
 
     $conn = connectDatabase();
     $query = "SELECT * FROM $table WHERE $finid = $id";
@@ -52,52 +54,56 @@ function displayEdit($table, $id){
 }
 
 function displayMatchEdit($id){
-    $finid = "matchid";
+    $finid = "Match_id";
     $conn = connectDatabase();
-    $query = "SELECT matchid, homescore, visitorscore FROM matches WHERE $finid = $id";
+    $query = "SELECT Match_id, Home_Goals, Away_Goals FROM matches WHERE $finid = $id";
     $result =  $conn->query($query);
     return $result->fetch_assoc();
 
 }
 
 function updateLeagues($table, $id, $name, $country){
+    $success=$_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT']."/final/success.php";
+    $failed=$_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT']."/final/fail.php";
     $conn = connectDatabase();
-    $query = "UPDATE $table SET name= '$name', country= '$country' WHERE leagueid = $id";
+    $query = "UPDATE $table SET League_Name= '$name', League_Country= '$country' WHERE League_id = $id";
     if ($conn->query($query) === TRUE) {
         echo "<script language='javascript'>
-        window.location.replace(\"http://localhost:8000/success.php\");
+        window.location.replace(\"success.php\");
         </script>";
+    
+        
     } else {
         echo "<script language='javascript'>
-        window.location.replace(\"http://localhost:8000/fail.php\");
+        window.location.replace(\"fail.php\");
         </script>";
     }
 }
 
 function updateClubs($table, $id, $name, $ranking, $wins, $losses, $draws, $points){
     $conn = connectDatabase();
-    $query = "UPDATE $table SET name= '$name', ranking= $ranking, wins= $wins, losses= $losses, draws=$draws, points= $points WHERE clubid = $id";
+    $query = "UPDATE $table SET Name= '$name', Ranking= $ranking, Wins= $wins, Losses= $losses, Draws=$draws, Points= $points WHERE Club_id = $id";
     if ($conn->query($query) === TRUE) {
         echo "<script language='javascript'>
-        window.location.replace(\"http://localhost:8000/success.php\");
+        window.location.replace(\"success.php\");
         </script>";
     } else {
         echo "<script language='javascript'>
-        window.location.replace(\"http://localhost:8000/fail.php\");
+        window.location.replace(\"fail.php\");
         </script>";
     }
 }
 
 function updateMatches($table, $id, $homescore, $visitorscore){
     $conn = connectDatabase();
-    $query = "UPDATE $table SET homescore= $homescore, visitorscore= $visitorscore WHERE matchid = $id";
+    $query = "UPDATE $table SET Home_Goals= $homescore, Away_Goals= $visitorscore WHERE Match_id = $id";
     if ($conn->query($query) === TRUE) {
         echo "<script language='javascript'>
-        window.location.replace(\"http://localhost:8000/success.php\");
+        window.location.replace(\"success.php\");
         </script>";
     } else {
         echo "<script language='javascript'>
-        window.location.replace(\"http://localhost:8000/fail.php\");
+        window.location.replace(\"fail.php\");
         </script>";
     }
 }
@@ -106,14 +112,14 @@ function updateMatches($table, $id, $homescore, $visitorscore){
 
 function updatePlayers($table, $id, $name, $position, $age, $height, $weight, $country, $goals, $assists, $marketval){
     $conn = connectDatabase();
-    $query = "UPDATE $table SET name= '$name', country= '$country', position = '$position', age= $age, height= '$height', weight= $weight, goals= '$goals', assists= $assists, marketval=$marketval WHERE playerid = $id";
+    $query = "UPDATE $table SET Name= '$name', Player_Country= '$country', Position = '$position', Age= $age, Height= '$height', Weight= $weight, Goals= '$goals', Assists= $assists, Market_Value=$marketval WHERE Player_id = $id";
     if ($conn->query($query) === TRUE) {
         echo "<script language='javascript'>
-        window.location.replace(\"http://localhost:8000/success.php\");
+        window.location.replace(\"success.php\");
         </script>";
     } else {
         echo "<script language='javascript'>
-        window.location.replace(\"http://localhost:8000/fail.php\");
+        window.location.replace(\"fail.php\");
         </script>";
     }
 }
@@ -121,7 +127,7 @@ function updatePlayers($table, $id, $name, $position, $age, $height, $weight, $c
 
 function getClub($id) {
     $conn = connectDatabase();
-    $query = "SELECT name FROM clubs WHERE clubs.clubid = $id";
+    $query = "SELECT Name FROM club WHERE club.Club_id = $id";
     $result = $conn->query($query);
     $name = $result->fetch_array()[0];
     return $name;
@@ -133,13 +139,13 @@ function getData($table) {
 
     $sql = "";
 
-    if ($table == "clubs") {
+    if ($table == "club") {
         $sql = sprintf($getRow, $table);
-    } elseif ($table == "leagues") {
+    } elseif ($table == "league") {
         $sql = sprintf($getRow, $table);
     } elseif ($table == "matches") {
         $sql = sprintf($getRow, $table);
-    } elseif ($table == "players") {
+    } elseif ($table == "player") {
         $sql = sprintf($getRow, $table);
     }
 

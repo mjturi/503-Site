@@ -3,12 +3,13 @@
 
 function connectDatabase()
 {
-    $servername = "127.0.0.1:3306";
+    $servername = "localhost";
     $username = "root";
-    $password = "abcd1234";
-    $dbname = "Soccer";
+    $password = "ZugYdnpW1!";
 
-    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    $conn = new mysqli($servername, $username, $password);
+    $conn->select_db("soccer");
 
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
@@ -22,21 +23,23 @@ function deleteData($table, $id)
     $conn = connectDatabase();
     $deleteRow = "DELETE FROM %s WHERE %s=%d";
     $sql = "";
-    if ($table == "clubs") {
-        $sql = sprintf($deleteRow, $table, 'clubid', $id);
-    } elseif ($table == "leagues") {
-        $sql = sprintf($deleteRow, $table, 'leagueid', $id);
+    if ($table == "club") {
+        $sql = sprintf($deleteRow, $table, 'Club_id', $id);
+    } elseif ($table == "league") {
+        $sql = sprintf($deleteRow, $table, 'League_id', $id);
     } elseif ($table == "matches") {
-        $sql = sprintf($deleteRow, $table, 'matchid', $id);
-    } elseif ($table == "players") {
-        $sql = sprintf($deleteRow, $table, 'playerid', $id);
+        $sql = sprintf($deleteRow, $table, 'Match_id', $id);
+    } elseif ($table == "player") {
+        $sql = sprintf($deleteRow, $table, 'Player_id', $id);
     }
+    echo $sql;
 
     if ($conn->query($sql) === TRUE) {
         echo "Record deleted successfully";
     } else {
         echo "Error deleting record: " . $conn->error;
     }
+
 
     $conn->close();
 }

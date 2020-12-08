@@ -7,7 +7,7 @@
 <body>
     <header>
         <div id="logo">
-            <a href="https://www.sdsu.edu/">
+            <a href="index.php">
                 <img src="./images/football.svg">
             </a>
             <a href="index.php">
@@ -21,7 +21,6 @@
                 <li><a href="#clubs">Clubs</a></li>
                 <li><a href="#matches">Matches</a></li>
                 <li><a href="#players">Players</a></li>
-                <li><a href="#">Get Involved</a></li>
             </ul>
         </nav>
     </header>
