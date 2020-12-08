@@ -1,9 +1,4 @@
 # 503-Site
-
-## Site Split:
-- Add page: Harsh
-- Update Page: Matt
-- Main Page: Atul
 ![1](./ppt/1.png)
 ![2](./ppt/2.png)
 ![3](./ppt/3.png)
